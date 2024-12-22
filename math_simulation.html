@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Function Plotter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+<header>
+    <h1>Matematyka: wykres funkcji</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html">Powrót do Strony Głównej</a></li>
+            <li><a href="informatics_simulation.html">Informatyka: Algorytmy sortowania</a></li>
+            <li><a href="physics_simulation.html">Fizyka: Ruch Jednostajny</a></li>
+        </ul>
+    </nav>
+</header>
+<h1>Matematyka: wykres funkcji</h1>
+<label for="functionInput">Wprowadź funkcję (np., x*x, Math.sin(x)): </label>
+<input type="text" id="functionInput" placeholder="Enter function">
+<button onclick="plotFunction()">Rysuj</button>
+<canvas id="plotCanvas" width="800" height="600"></canvas>
+
+<script>
+    const canvas = document.getElementById('plotCanvas');
+    const ctx = canvas.getContext('2d');
+    const xMin = -5;
+    const xMax = 5;
+    const yMin = -5;
+    const yMax = 5;
+
+    function drawAxes() {
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 1;
+
+        // Draw X axis
+        ctx.beginPath();
+        // const xZero = canvas.width * (-xMin) / (xMax - xMin);
+        ctx.moveTo(0, canvas.height / 2);
+        ctx.lineTo(canvas.width, canvas.height / 2);
+        ctx.stroke();
+
+        // Draw Y axis
+        ctx.beginPath();
+        // const yZero = canvas.height * (yMax) / (yMax - yMin);
+        ctx.moveTo(canvas.width / 2, 0);
+        ctx.lineTo(canvas.width / 2, canvas.height);
+        ctx.stroke();
+
+        // X-axis ticks
+        for (let x = xMin; x <= xMax; x++) {
+            const screenX = canvas.width * (x - xMin) / (xMax - xMin);
+            ctx.fillText(x, screenX, canvas.height / 2 + 15);
+            ctx.beginPath();
+            ctx.moveTo(screenX, canvas.height / 2 - 5);
+            ctx.lineTo(screenX, canvas.height / 2 + 5);
+            ctx.stroke();
+        }
+
+        // Y-axis ticks
+        for (let y = yMin; y <= yMax; y++) {
+            const screenY = canvas.height * (yMax - y) / (yMax - yMin);
+            if (y !== 0) {
+                ctx.fillText(y, canvas.width / 2 + 10, screenY + 5);
+            }
+            ctx.beginPath();
+            ctx.moveTo(canvas.width / 2 - 5, screenY);
+            ctx.lineTo(canvas.width / 2 + 5, screenY);
+            ctx.stroke();
+        }
+    }
+
+    function plotFunction() {
+        const funcInput = document.getElementById('functionInput').value;
+        try {
+            const func = new Function('x', `return ${funcInput}`);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawAxes();
+            ctx.strokeStyle = 'blue';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+
+            for (let x = xMin; x <= xMax; x += 0.01) {
+                const y = func(x);
+                const screenX = canvas.width * (x - xMin) / (xMax - xMin);
+                const screenY = canvas.height * (yMax - y) / (yMax - yMin);
+                if (x === xMin) {
+                    ctx.moveTo(screenX, screenY);
+                } else {
+                    ctx.lineTo(screenX, screenY);
+                }
+            }
+
+            ctx.stroke();
+        } catch (error) {
+            alert("Invalid function. Please enter a correct function.");
+        }
+    }
+
+    drawAxes();
+</script>
+</body>
+
+</html>

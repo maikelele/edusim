@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fizyka - Ruch Jednostajny</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+<header>
+    <h1>Symulacja Fizyki</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html">Powrót do Strony Głównej</a></li>
+            <li><a href="math_simulation.html">Matematyka: Wykres Funkcji</a></li>
+            <li><a href="informatics_simulation.html">Informatyka: Algorytmy sortowania</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <section>
+        <h2>Symulacja Ruchu Jednostajnego</h2>
+        <label for="speed">Prędkość początkowa (px/s): </label>
+        <input type="number" id="speed" value="2" step="0.5">
+
+        <label for="acceleration">Przyspieszenie (px/s²): </label>
+        <input type="number" id="acceleration" value="0" step="0.1">
+
+        <button onclick="startSimulation()">Rozpocznij Symulację</button>
+        <canvas id="physicsCanvas"></canvas>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2024 EduSim. Wszelkie prawa zastrzeżone.</p>
+</footer>
+
+<script>
+    const canvas = document.getElementById('physicsCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = 400;
+        drawMotion();
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    let position = 0;
+    let speed = 2;
+    let acceleration = 0;
+    let interval;
+
+    function drawMotion() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#007bff';
+        ctx.fillRect(position, canvas.height / 2 - 20, 40, 40);
+
+        position += speed;
+        speed += acceleration;
+
+        if (position > canvas.width || position < -40) {
+            position = -40;
+            speed = parseFloat(document.getElementById('speed').value);
+        }
+    }
+
+    function startSimulation() {
+        clearInterval(interval);
+        position = -40;
+        speed = parseFloat(document.getElementById('speed').value);
+        acceleration = parseFloat(document.getElementById('acceleration').value);
+        interval = setInterval(drawMotion, 50);
+    }
+</script>
+</body>
+
+</html>

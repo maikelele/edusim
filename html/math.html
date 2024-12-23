@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Function Plotter</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+<header>
+    <h1>Matematyka: wykres funkcji</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html">Powrót do Strony Głównej</a></li>
+            <li><a href="sorting.html">Informatyka: Algorytmy sortowania</a></li>
+            <li><a href="physics.html">Fizyka: Ruch Jednostajny</a></li>
+        </ul>
+    </nav>
+</header>
+<div style="display: flex; align-items: flex-start; justify-content: space-between; margin: 0 40px;">
+    <div style="flex-grow: 1;">
+        <label for="functionInput" style="display: block; margin-bottom: 10px;">Wybierz funkcję z listy: </label>
+        <select id="functionInput" style="display: block; margin-bottom: 10px;">
+            <option value="x*x">x * x</option>
+            <option value="Math.sin(x)">Math.sin(x)</option>
+            <option value="Math.cos(x)">Math.cos(x)</option>
+            <option value="Math.exp(x)">Math.exp(x)</option>
+            <option value="Math.log(x)">Math.log(x)</option>
+        </select>
+        <label for="functionCustomInput" style="display: block; margin-bottom: 10px;">
+            Lub wprowadź własny wzór funkcji:
+        </label>
+        <input type="text" id="functionCustomInput" placeholder="np. Math.sin(x) + x"
+               style="display: block; margin-bottom: 10px;"/>
+        <button onclick="plotFunction()" style="display: block; margin-bottom: 20px;">Rysuj</button>
+    </div>
+    <label for="previousPlotsDropdown">
+        Poprzednie funkcje:
+    </label>
+    <select id="previousPlotsDropdown" style="margin-left: 20px; height: 50px; align-self: flex-start;"
+            onchange="handlePreviousPlotChange()">
+        <option value="" disabled selected>Zobacz Poprzednie Wykresy</option>
+    </select>
+</div>
+<div id="previousPlots" style="display: none; margin: 20px 40px;">
+    <h3>Poprzednie wykresy:</h3>
+    <ul id="previousPlotsList"></ul>
+</div>
+<canvas id="plotCanvas" width="900" height="500" style="display: block; margin: 20px auto;"></canvas>
+
+<script src="../js/math.js"></script>
+</body>
+
+</html>

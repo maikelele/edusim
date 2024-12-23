@@ -4,16 +4,40 @@ const ctx = canvas.getContext('2d');
 let array = [];
 const size = 50;
 
-const speedInput = document.getElementById('speedInput').value;
-const algorithmSelect = document.getElementById('algorithmSelect').value;
-console.log(algorithmSelect);
+let speedInput;
+let algorithmSelect;
+
+document.addEventListener("DOMContentLoaded", () => {
+    speedInput = document.getElementById("speedInput").value;
+    algorithmSelect = document.getElementById("algorithmSelect").value;
+    console.log(
+        "speedInput from DOM: " + speedInput,
+        "algorithmSelect from DOM: " + algorithmSelect)
+})
+
+function handleAlgorithmSelect(event) {
+    algorithmSelect = document.getElementById("algorithmSelect").value;
+    console.log("Algorithm selected: " + algorithmSelect);
+}
+
+function handleSpeedInputChange(event) {
+    speedInput = document.getElementById("speedInput").value;
+    console.log("Speed input changed: " + speedInput);
+}
+
+async function handlePreviousParametersChange(event) {
+    speedInput = JSON.parse(document.getElementById('previousParametersDropdown').value).speed;
+    algorithmSelect = JSON.parse(document.getElementById('previousParametersDropdown').value).algorithm;
+    console.log("speedInput: " + speedInput, "\nalgorithmSelect: " + algorithmSelect)
+    await startSorting();
+}
 
 function generateArray() {
     array = Array.from({length: size}, () => Math.floor(Math.random() * canvas.height));
     drawArray();
 }
 
-async function bubbleSort() {
+async function bubbleSort(speedInput=null) {
     let swapped;
     for (let i = 0; i < size - 1; i++) {
         swapped = false;
@@ -65,10 +89,20 @@ function drawArray(highlightIndex1 = -1, highlightIndex2 = -1) {
 }
 
 async function startSorting() {
+    generateArray();
+    console.log("Speed input: " + speedInput + ", Algorithm: " + algorithmSelect);
+
+    const dropdown = document.getElementById('previousParametersDropdown');
+    const option = document.createElement('option');
+    option.value = JSON.stringify({algorithm: algorithmSelect, speed: speedInput});
+    option.text = "Algorytm: " + String(algorithmSelect) + ", Prędkość: " + String(speedInput);
+    console.log("Appending: " + option.text);
+    dropdown.appendChild(option);
+
     if (algorithmSelect === 'bubble') {
-        await bubbleSort();
+        await bubbleSort(speedInput);
     } else if (algorithmSelect === 'selection') {
-        await selectionSort();
+        await selectionSort(speedInput);
     }
 }
 

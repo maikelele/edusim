@@ -14,8 +14,8 @@
     <nav>
         <ul>
             <li><a href="index.html">Powrót do Strony Głównej</a></li>
-            <li><a href="math_simulation.html">Matematyka: Wykres Funkcji</a></li>
-            <li><a href="physics_simulation.html">Fizyka: Ruch Jednostajny</a></li>
+            <li><a href="math.html">Matematyka: Wykres Funkcji</a></li>
+            <li><a href="physics.html">Fizyka: Ruch Jednostajny</a></li>
         </ul>
     </nav>
 </header>
@@ -24,25 +24,33 @@
     <section>
         <h2>Wizualizacja Algorytmów Sortowania</h2>
         <label for="algorithmSelect">Wybierz algorytm: </label>
-        <select id="algorithmSelect">
+        <select id="algorithmSelect"
+                onchange="handleAlgorithmSelect()">
             <option value="bubble">Sortowanie bąbelkowe</option>
             <option value="selection">Sortowanie przez wybieranie</option>
         </select>
-
         <label for="speedInput">Prędkość sortowania (ms): </label>
-        <input type="number" id="speedInput" min="10" max="1000" step="10" value="" placeholder="Wybierz prędkość">
+        <input type="number" id="speedInput" min="10" max="1000" step="10" value="30" placeholder="Wybierz prędkość"
+        onchange="handleSpeedInputChange()">
 
         <button onclick="startSorting()">Rozpocznij sortowanie</button>
 
         <canvas id="informaticsCanvas" width="800" height="400"></canvas>
-    </section>
-</main>
+        <label for="previousParametersDropdown" style="position: absolute; top: 130px; right: 60px;">
+            Poprzednie parametry:
+        </label>
+        <select id="previousParametersDropdown"
+                style="margin-left: 20px; height: 50px; align-self: flex-start; position: absolute; top: 160px; right: 40px;"
+                onchange="handlePreviousParametersChange()">
+            <option value="" disabled selected>Zobacz Poprzednie Parametry</option>
+        </select>
 
-<footer>
+    </section>
+</main><footer>
     <p>&copy; 2024 EduSim. Wszelkie prawa zastrzeżone.</p>
 </footer>
 
-<script src="../js/sorting_visualization.js"></script>
+<script src="../js/sorting.js"></script>
 </body>
 
 </html>

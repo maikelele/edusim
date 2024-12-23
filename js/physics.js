@@ -11,6 +11,31 @@ let acceleration = 0;
 let interval;
 let time = 0;
 
+document.addEventListener("DOMContentLoaded", () => {
+    speed = document.getElementById('speed').value;
+    acceleration = document.getElementById('acceleration').value;
+    console.log("Speed: " + speed + ", Acceleration: " + acceleration);
+})
+
+function handleDropdownChange(event) {
+    const selectedValue = document.getElementById('previousParametersDropdown').value;
+    console.log("Selected value: " + selectedValue);
+    speed = parseFloat(JSON.parse(selectedValue).speed);
+    acceleration = parseFloat(JSON.parse(selectedValue).acceleration);
+    console.log("Speed: " + speed + ", Acceleration: " + acceleration);
+    startSimulation(speed, acceleration);
+}
+
+function handleSpeedChange(event) {
+    speed = parseFloat(document.getElementById('speed').value);
+    console.log("Speed: " + speed);
+}
+
+function handleAccelerationChange(event) {
+    acceleration = parseFloat(document.getElementById('acceleration').value);
+    console.log("Acceleration: " + acceleration);
+}
+
 function drawMotion() {
     position = speed * time + (acceleration * Math.pow(time, 2)) / 2;
 
@@ -26,11 +51,15 @@ function drawMotion() {
     ctx.fill();
 
     time += 1 / 100;
-    console.log("position: " + position);
-    console.log("t: " + time)
 }
 
-function startSimulation() {
+function stopSimulation() {
+    clearInterval(interval);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    time = 0;
+}
+
+function startSimulation(dropdownSpeed=null, dropdownAcceleration=null) {
     // Display a message on the screen when the simulation starts
     const messageDiv = document.createElement('div');
     messageDiv.id = 'simulationMessage';
@@ -56,9 +85,17 @@ function startSimulation() {
             messageDiv.remove();
         }
     }, 3000);
-    clearInterval(interval);
-    position = -40;
-    speed = parseFloat(document.getElementById('speed').value);
-    acceleration = parseFloat(document.getElementById('acceleration').value);
+
+    if(dropdownAcceleration === null && dropdownSpeed === null) {
+        const dropdown = document.getElementById('previousParametersDropdown');
+        let option = document.createElement('option');
+        option.value = JSON.stringify({speed: speed, acceleration: acceleration} );
+        option.text = "Speed: " + String(speed) + ", Acceleration: " + String(acceleration);
+        dropdown.appendChild(option);
+        console.log("Appending: " + option.text);
+    }
+
+    stopSimulation();
+    time = 0;
     interval = setInterval(drawMotion, 10);
 }

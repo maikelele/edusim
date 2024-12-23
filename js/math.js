@@ -5,13 +5,29 @@ const xMax = 5;
 const yMin = -5;
 const yMax = 5;
 
-function plotFunction() {
+function handlePreviousPlotChange(event) {
+    const dropdown = document.getElementById('previousPlotsDropdown');
+    const selectedFunction = dropdown.value;
+
+    plotFunction(selectedFunction);
+}
+function plotFunction(argumentInput = null) {
+    console.log(argumentInput);
     const selectInput = document.getElementById('functionInput').value;
     const customInput = document.getElementById('functionCustomInput').value;
-    let funcInput = customInput || selectInput;
+    let funcInput = argumentInput || customInput || selectInput;
     console.log(funcInput);
+    if (!argumentInput) {
+        // Add to previous plots
+        const dropdown = document.getElementById('previousPlotsDropdown');
+        const option = document.createElement('option');
+        option.value = funcInput;
+        option.text = String(funcInput);
+        dropdown.appendChild(option);
+    }
 
     try {
+        console.log("Plotting function:", funcInput);
         const func = new Function('x', `return ${funcInput}`);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawAxes();

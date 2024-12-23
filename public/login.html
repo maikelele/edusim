@@ -5,15 +5,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Rejestracja - EduSim">
-    <title>Zarejestruj się - EduSim</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <meta name="description" content="Logowanie - EduSim">
+    <title>Zaloguj się - EduSim</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 <!-- Nagłówek strony -->
 <header>
-    <h1>EduSim - Zarejestruj się</h1>
+    <h1>EduSim - Zaloguj się</h1>
     <nav>
         <a href="index.html">Powrót na stronę główną</a>
     </nav>
@@ -21,25 +21,19 @@
 
 <!-- Sekcja główna -->
 <main>
-    <section id="register">
+    <section id="login">
         <article>
-            <h2>Rejestracja</h2>
-            <form action="/register" method="post">
+            <h2>Logowanie</h2>
+            <form action="/login" method="post">
                 <label for="username">Nazwa użytkownika:</label>
                 <input type="text" id="username" name="username" required>
-
-                <label for="email">Adres e-mail:</label>
-                <input type="email" id="email" name="email" required>
 
                 <label for="password">Hasło:</label>
                 <input type="password" id="password" name="password" required>
 
-                <label for="confirm-password">Potwierdź hasło:</label>
-                <input type="password" id="confirm-password" name="confirm-password" required>
-
-                <button type="submit">Zarejestruj się</button>
+                <button type="submit" onclick="login()">Zaloguj się</button>
             </form>
-            <p>Masz już konto? <a href="login.html">Zaloguj się tutaj</a>.</p>
+            <p>Nie masz jeszcze konta? <a href="register.html">Zarejestruj się tutaj</a>.</p>
         </article>
     </section>
 </main>
@@ -49,6 +43,7 @@
     <p>EduSim. Techniki Internetowe. Wszystkie prawa zastrzeżone.</p>
 </footer>
 
+<script src="login.js"></script>
 </body>
 
 </html>

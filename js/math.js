@@ -5,7 +5,7 @@ const xMax = 5;
 const yMin = -5;
 const yMax = 5;
 
-function handlePreviousPlotChange(event) {
+function handlePreviousPlotChange() {
     const dropdown = document.getElementById('previousPlotsDropdown');
     const selectedFunction = dropdown.value;
 

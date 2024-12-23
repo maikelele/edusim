@@ -15,17 +15,17 @@ document.addEventListener("DOMContentLoaded", () => {
         "algorithmSelect from DOM: " + algorithmSelect)
 })
 
-function handleAlgorithmSelect(event) {
+function handleAlgorithmSelect() {
     algorithmSelect = document.getElementById("algorithmSelect").value;
     console.log("Algorithm selected: " + algorithmSelect);
 }
 
-function handleSpeedInputChange(event) {
+function handleSpeedInputChange() {
     speedInput = document.getElementById("speedInput").value;
     console.log("Speed input changed: " + speedInput);
 }
 
-async function handlePreviousParametersChange(event) {
+async function handlePreviousParametersChange() {
     speedInput = JSON.parse(document.getElementById('previousParametersDropdown').value).speed;
     algorithmSelect = JSON.parse(document.getElementById('previousParametersDropdown').value).algorithm;
     console.log("speedInput: " + speedInput, "\nalgorithmSelect: " + algorithmSelect)

@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("Speed: " + speed + ", Acceleration: " + acceleration);
 })
 
-function handleDropdownChange(event) {
+function handleDropdownChange() {
     const selectedValue = document.getElementById('previousParametersDropdown').value;
     console.log("Selected value: " + selectedValue);
     speed = parseFloat(JSON.parse(selectedValue).speed);
@@ -26,12 +26,12 @@ function handleDropdownChange(event) {
     startSimulation(speed, acceleration);
 }
 
-function handleSpeedChange(event) {
+function handleSpeedChange() {
     speed = parseFloat(document.getElementById('speed').value);
     console.log("Speed: " + speed);
 }
 
-function handleAccelerationChange(event) {
+function handleAccelerationChange() {
     acceleration = parseFloat(document.getElementById('acceleration').value);
     console.log("Acceleration: " + acceleration);
 }

@@ -5,7 +5,6 @@ const savePlot = async (req, res) => {
 
     // Log incoming data for debugging (optional)
     console.log('Received data:', JSON.stringify(req.body));
-    console.log(funcInput)
 
     // Validate the input
     if (!email || !funcInput) {
@@ -35,4 +34,38 @@ const savePlot = async (req, res) => {
     }
 };
 
-module.exports = { savePlot };
+const getPlots = async (req, res) => {
+    const { email } = req.body;
+    console.log("Email: " + email)
+
+    if (!email) {
+        return res.status(400).json({
+            message: 'Email is required.',
+        });
+    }
+
+    const functions = [];
+
+    try {
+        console.log("Retrieving functions from database for email: " + email);
+        const result = await pool.query(
+            `SELECT * FROM get_functions_by_email($1)`,
+            [email]
+        );
+
+        result.rows.forEach(row => {
+            functions.push(row.function_name);
+        });
+
+        return res.status(200).json({
+            functions,
+        });
+    } catch (error) {
+        console.error('Error retrieving functions:', error.message);
+        return res.status(500).json({
+            message: 'Internal server error',
+        });
+    }
+}
+
+module.exports = { savePlot, getPlots };

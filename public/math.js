@@ -4,6 +4,26 @@ const xMin = -5;
 const xMax = 5;
 const yMin = -5;
 const yMax = 5;
+const email = getCookie('email');
+
+function getCookie(name) {
+    const cookies = document.cookie.split(';');
+    for (const cookie of cookies) {
+        const [key, value] = cookie.trim().split('='); // Trim and split
+        if (key === name) { // Correct comparison after trimming
+            return decodeURIComponent(value); // Decode the cookie value in case it's encoded
+        }
+    }
+    return null; // Return null if cookie not found
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    if (email) {
+        console.log("Email: " + email);
+    } else {
+        console.log("No email cookie found");
+    }
+})
 
 function handlePreviousPlotChange() {
     const dropdown = document.getElementById('previousPlotsDropdown');
@@ -11,8 +31,9 @@ function handlePreviousPlotChange() {
 
     plotFunction(selectedFunction);
 }
+
 function plotFunction(argumentInput = null) {
-    console.log(argumentInput);
+    console.log("Argument input: " + argumentInput);
     const selectInput = document.getElementById('functionInput').value;
     const customInput = document.getElementById('functionCustomInput').value;
     let funcInput = argumentInput || customInput || selectInput;
@@ -24,6 +45,26 @@ function plotFunction(argumentInput = null) {
         option.value = funcInput;
         option.text = String(funcInput);
         dropdown.appendChild(option);
+        if(email) {
+            fetch('/savePlot', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: email,
+                    funcInput: funcInput,
+                }),
+            }).then(response => {
+                if (response.ok) {
+                    console.log('Plot data saved successfully');
+                } else {
+                    console.error('Error saving plot data');
+                }
+            }).catch(error => {
+                console.error('Network error:', error);
+            });
+        }
     }
 
     try {

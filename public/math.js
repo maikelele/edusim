@@ -18,8 +18,37 @@ function getCookie(name) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    console.log("Email: " + email);
     if (email) {
-        console.log("Email: " + email);
+        fetch('/getPlots', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({email}),
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json(); // Parse response as JSON
+                } else {
+                    console.error('Error retrieving functions from database');
+                    return [];
+                }
+            })
+            .then(data => {
+                const functions = data.functions;
+                const dropdown = document.getElementById('previousPlotsDropdown');
+                for (let i = 0; i < functions.length; i++) {
+                    console.log(functions[i]);
+                    const option = document.createElement('option');
+                    option.value = functions[i]; // Assume the response contains function strings
+                    option.text = functions[i];
+                    dropdown.appendChild(option);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     } else {
         console.log("No email cookie found");
     }

@@ -2,3 +2,4 @@
 .idea/
 
 projekt.iml
+src/config/db.js

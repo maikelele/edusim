@@ -15,27 +15,28 @@ const loginUser = async (req, res) => {
         }
 
         const user = results.rows[0];
-        const username = user.username;
+        console.log("user: " + user);
 
-        console.log("Username: " + JSON.stringify(username));
+        console.log("Username: " + JSON.stringify(user.username));
+        console.log("Email: " + JSON.stringify(user.email));
 
 
-        res.cookie('email', email, {
+        res.cookie('email', user.email, {
             httpOnly: false,
-            secure: false,
+            secure: true,
             sameSite: 'none',
             maxAge: 1000 * 60 * 60 * 24 * 7
         })
-        res.cookie('username', username, {
+        res.cookie('username', user.username, {
             httpOnly: false,
-            secure: false,
+            secure: true,
             sameSite: 'none',
             maxAge: 1000 * 60 * 60 * 24 * 7
         })
         res.redirect(`/index.html`);
 
     } catch (error) {
-        console.error(error.message)
+        console.error("Error: " + error.message)
         res.status(500).json({
             message: 'Internal server error'
         });

@@ -74,15 +74,51 @@ form {
     gap: 10px;
 }
 
-/*h2 {*/
-/*    color: #007bff;*/
-/*    margin-bottom: 1em;*/
-/*}*/
-
-/* Stopka */
 footer {
     text-align: center;
     padding: 1em 0;
     background: #333;
     color: white;
+}
+
+#content-container {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+}
+
+.styled-video {
+    max-width: 50%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#simulations {
+    max-width: 40%;
+    font-family: Arial, sans-serif;
+}
+
+#simulations h2 {
+    margin-bottom: 10px;
+}
+
+#simulations ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+#simulations ul li {
+    margin-bottom: 10px;
+}
+
+#simulations ul li a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+#simulations ul li a:hover {
+    text-decoration: underline;
 }

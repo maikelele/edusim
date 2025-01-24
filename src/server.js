@@ -11,6 +11,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(authRoutes)
 
+app.get('/resources/introduction.mp4', (req, res) => {
+    res.sendFile(path.join(__dirname, '../resources/introduction.mp4'));
+});
+
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`)
 })

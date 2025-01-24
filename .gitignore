@@ -1,5 +1,6 @@
-# Ignore .idea
+node_modules/
 .idea/
 ./src/config/db.js
 projekt.iml
 src/config/db.js
+package-lock.json

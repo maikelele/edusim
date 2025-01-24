@@ -2,9 +2,9 @@ const { Pool } = require('pg');
 
 const pool = new Pool({
     user: 'postgres',
-    host: 'wickedly-blithe-langur.data-1.euc1.tembo.io',
-    database: 'techniki',
-    password: 'lkjf&*E(YFUISkfj#FKLJ',
+    host: '',
+    database: '',
+    password: '',
     port: 5432,
     ssl: {
         rejectUnauthorized: false

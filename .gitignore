@@ -1,5 +1,5 @@
 # Ignore .idea
 .idea/
-
+./src/config/db.js
 projekt.iml
 src/config/db.js

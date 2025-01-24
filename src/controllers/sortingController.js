@@ -39,7 +39,7 @@ const getSorting = async (req, res) => {
     }
 }
 
-const saveSorting = async (req, res) => {
+const saveSorting = async (req) => {
     console.log("Received data: ", req.body);
     const { email, algorithm, speed } = req.body;
     await pool.query(

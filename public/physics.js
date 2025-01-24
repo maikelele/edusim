@@ -48,8 +48,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 data.physics.forEach(item => {
                     const option = document.createElement('option');
                     //console.log(
-                        "Speed: " + item.velocity,
-                        "Acceleration: " + item.acceleration)
+                        // "Speed: " + item.velocity,
+                        // "Acceleration: " + item.acceleration)
                     option.value = JSON.stringify({velocity: item.velocity, acceleration: item.acceleration});
                     option.text = "Speed: " + String(item.velocity) + ", Acceleration: " + String(item.acceleration);
                     dropdown.appendChild(option);

@@ -49,7 +49,7 @@ cd src/
 node server.js
 ```
 
-Serwer będzie dostępny pod adresem `http://localhost:3000`.
+Serwer będzie dostępny pod adresem `http://localhost:4012`.
 
 ## API
 ### Endpoints

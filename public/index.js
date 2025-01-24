@@ -13,16 +13,16 @@ if (email && username) {
 `;
 
     document.getElementById('logout').addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent the default link behavior
-        clearAllCookies(); // Clear all cookies
-        alert('Zostałeś wylogowany.'); // Notify the user
+        event.preventDefault(); 
+        clearAllCookies(); 
+        alert('Zostałeś wylogowany.'); 
         document.getElementById('auth').innerHTML = `
         <p>
             <a href="login.html">Zaloguj się</a> |
             <a href="register.html">Zarejestruj się</a>
         </p>
     `;
-        document.getElementById('welcomeMessage').textContent = 'Witaj!'; // Reset welcome message
+        document.getElementById('welcomeMessage').textContent = 'Witaj!'; 
     });
 
 } else {

@@ -4,7 +4,7 @@ const savePlot = async (req, res) => {
     const { email, funcInput } = req.body;
 
     // Log incoming data for debugging (optional)
-    console.log('Received data:', JSON.stringify(req.body));
+    //console.log('Received data:', JSON.stringify(req.body));
 
     // Validate the input
     if (!email || !funcInput) {
@@ -14,7 +14,7 @@ const savePlot = async (req, res) => {
     }
 
     try {
-        console.log("Trying query from database...");
+        //console.log("Trying query from database...");
         const result = await pool.query(
             `SELECT add_user_math_function($1, $2) AS message`,
             [email, funcInput]
@@ -36,7 +36,7 @@ const savePlot = async (req, res) => {
 
 const getPlots = async (req, res) => {
     const { email } = req.body;
-    console.log("Email: " + email)
+    //console.log("Email: " + email)
 
     if (!email) {
         return res.status(400).json({
@@ -47,7 +47,7 @@ const getPlots = async (req, res) => {
     const functions = [];
 
     try {
-        console.log("Retrieving functions from database for email: " + email);
+        //console.log("Retrieving functions from database for email: " + email);
         const result = await pool.query(
             `SELECT * FROM get_functions_by_email($1)`,
             [email]

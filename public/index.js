@@ -1,10 +1,10 @@
 const email = getCookie('email');
 const username = getCookie('username');
-console.log("Email" + email);
-console.log("Username: " + username);
+//console.log("Email" + email);
+//console.log("Username: " + username);
 
 if (email && username) {
-    console.log('logged in');
+    //console.log('logged in');
     document.getElementById('welcomeMessage').textContent = `Witaj, ${username}`;
     document.getElementById('auth').innerHTML = `
     <p>
@@ -26,7 +26,7 @@ if (email && username) {
     });
 
 } else {
-    console.log('not logged in');
+    //console.log('not logged in');
     document.getElementById('auth').innerHTML = `
         <p>
             <a href="login.html">Zaloguj się</a> |

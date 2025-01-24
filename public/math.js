@@ -19,7 +19,7 @@ function getCookie(name) {
 
 document.addEventListener("DOMContentLoaded", () => {
     drawAxes();
-    console.log("Email: " + email);
+    //console.log("Email: " + email);
     if (email) {
         fetch('/getPlots', {
             method: 'POST',
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const functions = data.functions;
                 const dropdown = document.getElementById('previousPlotsDropdown');
                 for (let i = 0; i < functions.length; i++) {
-                    console.log(functions[i]);
+                    //console.log(functions[i]);
                     const option = document.createElement('option');
                     option.value = functions[i]; // Assume the response contains function strings
                     option.text = functions[i];
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.error('Error:', error);
             });
     } else {
-        console.log("No email cookie found");
+        //console.log("No email cookie found");
     }
 })
 
@@ -63,11 +63,11 @@ function handlePreviousPlotChange() {
 }
 
 function plotFunction(argumentInput = null) {
-    console.log("Argument input: " + argumentInput);
+    //console.log("Argument input: " + argumentInput);
     const selectInput = document.getElementById('functionInput').value;
     const customInput = document.getElementById('functionCustomInput').value;
     let funcInput = argumentInput || customInput || selectInput;
-    console.log(funcInput);
+    //console.log(funcInput);
     if (!argumentInput) {
         // Add to previous plots
         const dropdown = document.getElementById('previousPlotsDropdown');
@@ -87,7 +87,7 @@ function plotFunction(argumentInput = null) {
                 }),
             }).then(response => {
                 if (response.ok) {
-                    console.log('Plot data saved successfully');
+                    //console.log('Plot data saved successfully');
                 } else {
                     console.error('Error saving plot data');
                 }
@@ -98,7 +98,7 @@ function plotFunction(argumentInput = null) {
     }
 
     try {
-        console.log("Plotting function:", funcInput);
+        //console.log("Plotting function:", funcInput);
         const func = new Function('x', `return ${funcInput}`);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawAxes();

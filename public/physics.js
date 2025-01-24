@@ -25,9 +25,9 @@ let time = 0;
 document.addEventListener("DOMContentLoaded", () => {
     speed = document.getElementById('speed').value;
     acceleration = document.getElementById('acceleration').value;
-    console.log("Speed: " + speed + ", Acceleration: " + acceleration);
+    //console.log("Speed: " + speed + ", Acceleration: " + acceleration);
     if (email) {
-        console.log("Email: " + email);
+        //console.log("Email: " + email);
         fetch('/getPhysics', {
             method: 'POST',
             headers: {
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const dropdown = document.getElementById('previousParametersDropdown');
                 data.physics.forEach(item => {
                     const option = document.createElement('option');
-                    console.log(
+                    //console.log(
                         "Speed: " + item.velocity,
                         "Acceleration: " + item.acceleration)
                     option.value = JSON.stringify({velocity: item.velocity, acceleration: item.acceleration});
@@ -63,21 +63,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function handleDropdownChange() {
     const selectedValue = document.getElementById('previousParametersDropdown').value;
-    console.log("Selected value: " + selectedValue);
+    //console.log("Selected value: " + selectedValue);
     speed = parseFloat(JSON.parse(selectedValue).velocity);
     acceleration = parseFloat(JSON.parse(selectedValue).acceleration);
-    console.log("Speed: " + speed + ", Acceleration: " + acceleration);
+    //console.log("Speed: " + speed + ", Acceleration: " + acceleration);
     startSimulation(speed, acceleration);
 }
 
 function handleSpeedChange() {
     speed = parseFloat(document.getElementById('speed').value);
-    console.log("Speed: " + speed);
+    //console.log("Speed: " + speed);
 }
 
 function handleAccelerationChange() {
     acceleration = parseFloat(document.getElementById('acceleration').value);
-    console.log("Acceleration: " + acceleration);
+    //console.log("Acceleration: " + acceleration);
 }
 
 function drawMotion() {
@@ -137,7 +137,7 @@ function startSimulation(dropdownSpeed=null, dropdownAcceleration=null) {
         option.text = "Speed: " + String(speed) + ", Acceleration: " + String(acceleration);
 
         if (!Array.from(dropdown.options).some(el => el.text === option.text)) {
-            console.log("Appending: " + option.text);
+            //console.log("Appending: " + option.text);
             dropdown.appendChild(option);
             fetch('/savePhysics', {
                 method: 'POST',

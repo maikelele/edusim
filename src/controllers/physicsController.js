@@ -3,7 +3,7 @@ const pool = require("../config/db");
 const savePhysics = async (req, res) => {
     const { email, acceleration, velocity } = req.body;
 
-    console.log("Received data: ", email, acceleration, velocity)
+    //console.log("Received data: ", email, acceleration, velocity)
     if (!email || !acceleration || !velocity) {
         return res.status(400).json({
             message: 'Email, acceleration and velocity are required.',
@@ -11,7 +11,7 @@ const savePhysics = async (req, res) => {
     }
 
     try {
-        console.log("Trying query from database...");
+        //console.log("Trying query from database...");
         const result = await pool.query(
             `SELECT insert_usr_acc_vel($1, $2, $3) AS message`,
             [email, acceleration, velocity]
@@ -30,7 +30,7 @@ const savePhysics = async (req, res) => {
 
 const getPhysics = async (req, res) => {
     const { email } = req.body;
-    console.log("Email: " + email);
+    //console.log("Email: " + email);
 
     if (!email) {
         return res.status(400).json({
@@ -41,13 +41,13 @@ const getPhysics = async (req, res) => {
     const physics = [];
 
     try {
-        console.log("Retrieving physics from database for email: " + email);
+        //console.log("Retrieving physics from database for email: " + email);
         const result = await pool.query(
             `SELECT * FROM get_usr_acc_val($1)`,
             [email]
         );
-        console.log("Data retrieved")
-        console.log(result.rows)
+        //console.log("Data retrieved")
+        //console.log(result.rows)
         result.rows.forEach(row => {
             physics.push({
                 acceleration: row.acceleration_value,
@@ -56,7 +56,7 @@ const getPhysics = async (req, res) => {
         });
 
         physics.forEach(element => {
-            console.log("Acceleration: " + element.acceleration + ", Velocity: " + element.velocity);
+            //console.log("Acceleration: " + element.acceleration + ", Velocity: " + element.velocity);
         })
 
         return res.status(200).json({

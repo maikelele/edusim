@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     generateArray();
     speedInput = document.getElementById("speedInput").value;
     algorithmSelect = document.getElementById("algorithmSelect").value;
-    console.log(
+    //console.log(
         "speedInput from DOM: " + speedInput,
         "algorithmSelect from DOM: " + algorithmSelect)
     if(email) {
@@ -32,19 +32,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             })
             .then(data => {
-                console.log("Data: " + JSON.stringify(data));
+                //console.log("Data: " + JSON.stringify(data));
                 const dropdown = document.getElementById('previousParametersDropdown');
                 data.sorting.forEach(item => {
                     const option = document.createElement('option');
                     option.value = JSON.stringify({algorithm: item.algorithm_name, speed: item.sorting_speed});
-                    console.log(
+                    //console.log(
                         "Algorytm: " + item.algorithm_name,
                         "Prędkość: " + item.sorting_speed)
                     option.text = "Algorytm: " + item.algorithm_name + ", Prędkość: " + item.sorting_speed;
 
                     for (let i = 0; i < dropdown.length; i++) {
                         const el = dropdown.options[i];
-                        console.log(`dropdown[${i}].text: `, el.text);
+                        //console.log(`dropdown[${i}].text: `, el.text);
                         if (el.text === option.text) {
                             return;
                         }
@@ -72,18 +72,18 @@ function getCookie(name) {
 
 function handleAlgorithmSelect() {
     algorithmSelect = document.getElementById("algorithmSelect").value;
-    console.log("Algorithm selected: " + algorithmSelect);
+    //console.log("Algorithm selected: " + algorithmSelect);
 }
 
 function handleSpeedInputChange() {
     speedInput = document.getElementById("speedInput").value;
-    console.log("Speed input changed: " + speedInput);
+    //console.log("Speed input changed: " + speedInput);
 }
 
 async function handlePreviousParametersChange() {
     speedInput = JSON.parse(document.getElementById('previousParametersDropdown').value).speed;
     algorithmSelect = JSON.parse(document.getElementById('previousParametersDropdown').value).algorithm;
-    console.log("speedInput: " + speedInput, "\nalgorithmSelect: " + algorithmSelect)
+    //console.log("speedInput: " + speedInput, "\nalgorithmSelect: " + algorithmSelect)
     await startSorting();
 }
 
@@ -145,14 +145,14 @@ function drawArray(highlightIndex1 = -1, highlightIndex2 = -1) {
 
 async function startSorting() {
     generateArray();
-    console.log("Speed input: " + speedInput + ", Algorithm: " + algorithmSelect);
+    //console.log("Speed input: " + speedInput + ", Algorithm: " + algorithmSelect);
 
     const dropdown = document.getElementById('previousParametersDropdown');
     const option = document.createElement('option');
     option.value = JSON.stringify({algorithm: algorithmSelect, speed: speedInput});
     option.text = "Algorytm: " + String(algorithmSelect) + ", Prędkość: " + String(speedInput);
     if (!Array.from(dropdown.options).some(el => el.text === option.text)) {
-        console.log("Appending: " + option.text);
+        //console.log("Appending: " + option.text);
         dropdown.appendChild(option);
         fetch('saveSorting', {
             method: 'POST',

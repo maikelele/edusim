@@ -1,9 +1,9 @@
 const pool = require('../config/db')
 
 const loginUser = async (req, res) => {
-    console.log("Request body: " + req.body)
+    //console.log("Request body: " + req.body)
     const { email, password } = req.body
-    console.log("Email: " + email + ", Password: " + password)
+    //console.log("Email: " + email + ", Password: " + password)
     try {
         const results = await pool.query(
             'SELECT * from user_credentials WHERE email = $1 and password = $2',
@@ -15,10 +15,10 @@ const loginUser = async (req, res) => {
         }
 
         const user = results.rows[0];
-        console.log("user: " + user);
+        //console.log("user: " + user);
 
-        console.log("Username: " + JSON.stringify(user.username));
-        console.log("Email: " + JSON.stringify(user.email));
+        //console.log("Username: " + JSON.stringify(user.username));
+        //console.log("Email: " + JSON.stringify(user.email));
 
 
         res.cookie('email', user.email, {

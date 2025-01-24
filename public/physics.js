@@ -5,17 +5,16 @@ const email = getCookie('email');
 function getCookie(name) {
     const cookies = document.cookie.split(';');
     for (const cookie of cookies) {
-        const [key, value] = cookie.trim().split('='); // Trim and split
-        if (key === name) { // Correct comparison after trimming
-            return decodeURIComponent(value); // Decode the cookie value in case it's encoded
+        const [key, value] = cookie.trim().split('='); 
+        if (key === name) { 
+            return decodeURIComponent(value); 
         }
     }
-    return null; // Return null if cookie not found
+    return null; 
 }
 
-// Set canvas width to the width of the whole screen
 canvas.width = window.innerWidth;
-canvas.height = 200; // Set a default height for the canvas
+canvas.height = 200; 
 
 let position = 0;
 let speed = 0;
@@ -65,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function handleDropdownChange() {
     const selectedValue = document.getElementById('previousParametersDropdown').value;
     console.log("Selected value: " + selectedValue);
-    speed = parseFloat(JSON.parse(selectedValue).speed);
+    speed = parseFloat(JSON.parse(selectedValue).velocity);
     acceleration = parseFloat(JSON.parse(selectedValue).acceleration);
     console.log("Speed: " + speed + ", Acceleration: " + acceleration);
     startSimulation(speed, acceleration);
@@ -105,7 +104,7 @@ function stopSimulation() {
 }
 
 function startSimulation(dropdownSpeed=null, dropdownAcceleration=null) {
-    // Display a message on the screen when the simulation starts
+    
     const messageDiv = document.createElement('div');
     messageDiv.id = 'simulationMessage';
     messageDiv.style.position = 'absolute';
@@ -121,10 +120,10 @@ function startSimulation(dropdownSpeed=null, dropdownAcceleration=null) {
     messageDiv.innerText = 'Symulacja rozpoczęta! Prędkość początkowa: '
         + parseFloat(document.getElementById('speed').value) + ' px/s, Przyspieszenie: '
         + parseFloat(document.getElementById('acceleration').value) + ' px/s²';
-    // Add the message to the body
+    
     document.body.appendChild(messageDiv);
 
-    // Remove the message after 3 seconds
+  
     setTimeout(() => {
         if (messageDiv) {
             messageDiv.remove();
@@ -136,8 +135,10 @@ function startSimulation(dropdownSpeed=null, dropdownAcceleration=null) {
         let option = document.createElement('option');
         option.value = JSON.stringify({speed: speed, acceleration: acceleration} );
         option.text = "Speed: " + String(speed) + ", Acceleration: " + String(acceleration);
-        dropdown.appendChild(option);
-        if(email) {
+
+        if (!Array.from(dropdown.options).some(el => el.text === option.text)) {
+            console.log("Appending: " + option.text);
+            dropdown.appendChild(option);
             fetch('/savePhysics', {
                 method: 'POST',
                 headers: {
@@ -148,20 +149,12 @@ function startSimulation(dropdownSpeed=null, dropdownAcceleration=null) {
                     velocity: speed,
                     acceleration: acceleration,
                 })
-            }).then(
-                response => {
-                    if (response.ok) {
-                        console.log('Physics data saved successfully');
-                    } else {
-                        console.error('Error saving physics data');
-                    }
-                }
-            ).catch(
+            })
+            .catch(
                 error => {
                     console.error('Network error:', error);
                 })
         }
-        console.log("Appending: " + option.text);
     }
 
     stopSimulation();

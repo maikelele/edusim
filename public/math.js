@@ -18,6 +18,7 @@ function getCookie(name) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    drawAxes();
     console.log("Email: " + email);
     if (email) {
         fetch('/getPlots', {
@@ -162,4 +163,3 @@ function drawAxes() {
 }
 
 
-drawAxes();

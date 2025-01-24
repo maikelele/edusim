@@ -1,5 +1,6 @@
 const canvas = document.getElementById('informaticsCanvas');
 const ctx = canvas.getContext('2d');
+const email = getCookie('email');
 
 let array = [];
 const size = 50;
@@ -8,12 +9,66 @@ let speedInput;
 let algorithmSelect;
 
 document.addEventListener("DOMContentLoaded", () => {
+    generateArray();
     speedInput = document.getElementById("speedInput").value;
     algorithmSelect = document.getElementById("algorithmSelect").value;
     console.log(
         "speedInput from DOM: " + speedInput,
         "algorithmSelect from DOM: " + algorithmSelect)
+    if(email) {
+        fetch('getSorting', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({email}),
+        })
+            .then(response => {
+                if(response.ok) {
+                    return response.json();
+                } else {
+                    console.error('Error retrieving sorting parameters from database');
+                    return [];
+                }
+            })
+            .then(data => {
+                console.log("Data: " + JSON.stringify(data));
+                const dropdown = document.getElementById('previousParametersDropdown');
+                data.sorting.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = JSON.stringify({algorithm: item.algorithm_name, speed: item.sorting_speed});
+                    console.log(
+                        "Algorytm: " + item.algorithm_name,
+                        "Prędkość: " + item.sorting_speed)
+                    option.text = "Algorytm: " + item.algorithm_name + ", Prędkość: " + item.sorting_speed;
+
+                    for (let i = 0; i < dropdown.length; i++) {
+                        const el = dropdown.options[i];
+                        console.log(`dropdown[${i}].text: `, el.text);
+                        if (el.text === option.text) {
+                            return;
+                        }
+                        dropdown.appendChild(option);
+                    }
+                });
+
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            })
+    }
 })
+
+function getCookie(name) {
+    const cookies = document.cookie.split(';');
+    for (const cookie of cookies) {
+        const [key, value] = cookie.trim().split('=');
+        if (key === name) {
+            return decodeURIComponent(value);
+        }
+    }
+    return null; // Return null if cookie not found
+}
 
 function handleAlgorithmSelect() {
     algorithmSelect = document.getElementById("algorithmSelect").value;
@@ -96,8 +151,18 @@ async function startSorting() {
     const option = document.createElement('option');
     option.value = JSON.stringify({algorithm: algorithmSelect, speed: speedInput});
     option.text = "Algorytm: " + String(algorithmSelect) + ", Prędkość: " + String(speedInput);
-    console.log("Appending: " + option.text);
-    dropdown.appendChild(option);
+    if (!Array.from(dropdown.options).some(el => el.text === option.text)) {
+        console.log("Appending: " + option.text);
+        dropdown.appendChild(option);
+        fetch('saveSorting', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(
+                { email: email, algorithm: algorithmSelect, speed: speedInput}),
+        });
+    }
 
     if (algorithmSelect === 'bubble') {
         await bubbleSort(speedInput);
@@ -105,5 +170,3 @@ async function startSorting() {
         await selectionSort(speedInput);
     }
 }
-
-generateArray();

@@ -11,7 +11,6 @@
 </head>
 
 <body>
-<!-- Nagłówek strony -->
 <header>
     <h1>EduSim - Zaloguj się</h1>
     <nav>
@@ -19,11 +18,11 @@
     </nav>
 </header>
 
-<!-- Sekcja główna -->
 <main>
     <section id="login">
         <article>
             <h2>Logowanie</h2>
+            <div id="error" style="color: red; display: none;"></div>
             <form action="/login" method="post">
                 <label for="email">Adres email:</label>
                 <input type="text" id="email" name="email" required>
@@ -38,7 +37,6 @@
     </section>
 </main>
 
-<!-- Stopka -->
 <footer>
     <p>EduSim. Techniki Internetowe. Wszystkie prawa zastrzeżone.</p>
 </footer>

@@ -1,4 +1,3 @@
-/* Podstawowe style dla projektu EduSim */
 #welcomeMessage {
     font-size: 1.5rem;
     color: #333;
@@ -7,17 +6,15 @@
 
 #mathCanvas {
     display: block;
-    width: 100vw; /* 100% of the viewport width */
+    width: 100vw;
     height: 400px;
 }
-/* Resetowanie marginesów i paddingu */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Podstawowe style dla ciała dokumentu */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -25,7 +22,6 @@ body {
     line-height: 1.6;
 }
 
-/* Stylizacja nagłówka */
 header {
     background: #007bff;
     color: white;
@@ -37,7 +33,6 @@ header h1 {
     margin: 0;
 }
 
-/* Nawigacja */
 nav ul {
     list-style: none;
     display: flex;
@@ -73,10 +68,16 @@ section {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-h2 {
-    color: #007bff;
-    margin-bottom: 1em;
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
+
+/*h2 {*/
+/*    color: #007bff;*/
+/*    margin-bottom: 1em;*/
+/*}*/
 
 /* Stopka */
 footer {

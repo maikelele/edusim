@@ -21,10 +21,15 @@
 
 <!-- Sekcja główna -->
 <main>
+    <h1>Rejestracja</h1>
     <section id="register">
+        <header>
+            <h2>Formularz rejestracji</h2>
+        </header>
         <article>
-            <h2>Rejestracja</h2>
+            <h3>Wprowadź dane</h3>
             <form action="/register" method="post">
+                <div id="error" style="color: red; display: none;"></div>
                 <label for="username">Nazwa użytkownika:</label>
                 <input type="text" id="username" name="username" required>
 
@@ -49,6 +54,7 @@
     <p>EduSim. Techniki Internetowe. Wszystkie prawa zastrzeżone.</p>
 </footer>
 
+<script src="register.js"></script>
 </body>
 
 </html>

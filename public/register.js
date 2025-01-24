@@ -4,7 +4,8 @@ window.onload = function() {
     console.log(errorMessage);
     if (errorMessage) {
         const errorDiv = document.getElementById('error');
-        errorDiv.textContent = "Nie znaleziono użytkownika";
+        errorDiv.textContent = "Nazwa email już zajęta";
+        console.log("Nazwa email już zajęta")
         errorDiv.style.display = 'block';
     }
 }

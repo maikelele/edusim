@@ -1,5 +1,17 @@
 const canvas = document.getElementById('physicsCanvas');
 const ctx = canvas.getContext('2d');
+const email = getCookie('email');
+
+function getCookie(name) {
+    const cookies = document.cookie.split(';');
+    for (const cookie of cookies) {
+        const [key, value] = cookie.trim().split('='); // Trim and split
+        if (key === name) { // Correct comparison after trimming
+            return decodeURIComponent(value); // Decode the cookie value in case it's encoded
+        }
+    }
+    return null; // Return null if cookie not found
+}
 
 // Set canvas width to the width of the whole screen
 canvas.width = window.innerWidth;
@@ -15,6 +27,39 @@ document.addEventListener("DOMContentLoaded", () => {
     speed = document.getElementById('speed').value;
     acceleration = document.getElementById('acceleration').value;
     console.log("Speed: " + speed + ", Acceleration: " + acceleration);
+    if (email) {
+        console.log("Email: " + email);
+        fetch('/getPhysics', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({email}),
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    console.error('Error retrieving physics parameters from database');
+                    return [];
+                }
+            })
+            .then(data => {
+                const dropdown = document.getElementById('previousParametersDropdown');
+                data.physics.forEach(item => {
+                    const option = document.createElement('option');
+                    console.log(
+                        "Speed: " + item.velocity,
+                        "Acceleration: " + item.acceleration)
+                    option.value = JSON.stringify({velocity: item.velocity, acceleration: item.acceleration});
+                    option.text = "Speed: " + String(item.velocity) + ", Acceleration: " + String(item.acceleration);
+                    dropdown.appendChild(option);
+                });
+            })
+        .catch(error => {
+                console.error('Error:', error);
+            })
+    }
 })
 
 function handleDropdownChange() {
@@ -92,6 +137,30 @@ function startSimulation(dropdownSpeed=null, dropdownAcceleration=null) {
         option.value = JSON.stringify({speed: speed, acceleration: acceleration} );
         option.text = "Speed: " + String(speed) + ", Acceleration: " + String(acceleration);
         dropdown.appendChild(option);
+        if(email) {
+            fetch('/savePhysics', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: email,
+                    velocity: speed,
+                    acceleration: acceleration,
+                })
+            }).then(
+                response => {
+                    if (response.ok) {
+                        console.log('Physics data saved successfully');
+                    } else {
+                        console.error('Error saving physics data');
+                    }
+                }
+            ).catch(
+                error => {
+                    console.error('Network error:', error);
+                })
+        }
         console.log("Appending: " + option.text);
     }
 
